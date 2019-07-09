@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import os,sys
 import base64
 import re
 import json
@@ -6,12 +7,12 @@ import time
 import paramiko
 from time import gmtime, strftime
 
-from elasticsearch import Elasticsearch
+#from elasticsearch import Elasticsearch
 from datetime import datetime
 
 version="1.0.1"
 
-storwizeDataDir="/Users/pierrejacques/scripts/data"
+storwizeDataDir="/tmp/data"
 elastic_server="http://localhost:9200"
 
 
@@ -23,7 +24,7 @@ if elastic_server is None:
         print "Elastic server is not defined\n"
         exit(-2)
 
-es=Elasticsearch()
+#es=Elasticsearch()
 
 storwize2ES=dict()
 
@@ -55,5 +56,5 @@ for file_name in dirs:
 				out["PEAK"]=float(ma.group(7))
 				#out["PEAK"]=float(ma.group(8))
 				out["INFORMATION"]=storwize2ES
-				#print json.dumps(out) + "\n"
-				es.index(index=index_name.lower(),doc_type="storwize-lsystemstats-json",body=json.dumps(out))
+				#print es.index(index=index_name.lower(),doc_type="storwize-lsystemstats-json",body=json.dumps(out))
+				print json.dumps(out)
